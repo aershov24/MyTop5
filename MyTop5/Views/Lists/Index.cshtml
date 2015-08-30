@@ -4,99 +4,131 @@
         <div class="col-md-12">
             <br/>
             <strong class="error">{{ error }}</strong>
-            <p data-ng-hide="addMode"><a data-ng-click="toggleAdd()" href="javascript:;" class="btn btn-primary">Add New List</a></p>
+            <p data-ng-hide="addMode">
+            <a data-ng-click="toggleAdd()" href="javascript:;" class="btn btn-primary btn-sm">Add List</a>
+            </p>
             <form name="addtop5list" data-ng-show="addMode">
                 <div class="form-group">
-                    <label for="cname" class="col-sm-2 control-label">Title:</label>
+                    <label for="cname" class="col-sm-2 control-label">List name:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="cname" placeholder="please enter title" data-ng-model="newtop5list.Title" required />
+                        <input type="text" class="form-control" id="cname" placeholder="Enter List Name" data-ng-model="newtop5list.title" required />
                     </div>
                 </div>
-                <br />
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <input type="submit" value="Add" data-ng-click="add()" class="btn btn-primary" />
-                        <input type="button" value="Cancel" data-ng-click="toggleAdd()" class="btn btn-primary" />
+                        <input type="submit" value="Add" data-ng-click="add()" class="btn btn-primary btn-sm" />
+                        <input type="button" value="Cancel" data-ng-click="toggleAdd()" class="btn btn-primary btn-sm" />
                     </div>
                 </div>
-                <br />
             </form>
             <br/>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-                <div class="panel-group" id="mytop5lists">
-                    <div class="panel panel-default" data-ng-repeat="top5list in top5lists">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
+            <div class="panel-group" id="mytop5lists">
+                <div class="panel panel-default" data-ng-repeat="top5list in top5lists">
+                    <div class="panel-heading">
+                        <div class="panel-title">
+                            <div class="row">
+                                <table style="width: 100%">
+                                    <tr>
+                                        <td align="left">
+                                            <div class="col-md-12">
+                                                <a data-toggle="collapse" data-parent="#mytop5lists" data-ng-hide="top5list.editMode" data-ng-click="showItems(top5list)" href="#collapse{{ top5list.top5ListId }}">{{ top5list.title }}</a>
+                                                <input data-ng-show="top5list.editMode" type="text" data-ng-model="top5list.title" />
+                                            </div>
+                                        </td>
+                                        <td align="right">
+                                            <div class="col-md-12">
+                                                <table>
+                                                    <tr>
+                                                        <td style="white-space:nowrap">
+                                                            <a data-ng-hide="top5list.editMode" data-ng-click="toggleEdit(top5list)" href="javascript:;"><span class="glyphicon glyphicon-edit"></span></a>
+                                                            <a data-ng-hide="top5list.editMode" data-ng-click="deletetop5list(top5list)" href="javascript:;"><span class="glyphicon glyphicon-trash"></span></a>
+
+                                                        </td>
+                                                        <td style="white-space:nowrap">
+                                                            <a data-ng-show="top5list.editMode" data-ng-click="save(top5list)" href="javascript:;"><span class="glyphicon glyphicon-ok"></span></a>
+                                                            <a data-ng-show="top5list.editMode" data-ng-click="toggleEdit(top5list)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                                </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="collapse{{ top5list.top5ListId }}" class="panel-collapse collapse">
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
                                 <div class="row">
-                                    <div class="col-sm-6">
-                                        <a data-toggle="collapse" data-parent="#mytop5lists" data-ng-hide="top5list.editMode" data-ng-click="showItems(top5list)" href="#collapse{{ top5list.top5ListId }}">{{ top5list.title }}</a>
-                                        <input data-ng-show="top5list.editMode" type="text" data-ng-model="top5list.title" />
-                                    </div>
-                                    <div class="col-sm-6" style="text-align: right;">
-                                        <a data-ng-hide="top5list.editMode" data-ng-click="toggleEdit(top5list)" href="javascript:;"><span class="glyphicon glyphicon-edit"></span></a> <a data-ng-hide="top5list.editMode" data-ng-click="deletetop5list(top5list)" href="javascript:;"><span class="glyphicon glyphicon-trash"></span></a>
-                                        <a data-ng-show="top5list.editMode" data-ng-click="save(top5list)" href="javascript:;"><span class="glyphicon glyphicon-ok"></span></a> <a data-ng-show="top5list.editMode" data-ng-click="toggleEdit(top5list)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+                                    <div class="col-md-12">
+                                        <p data-ng-hide="top5list.addItemMode">
+                                            <a data-ng-click="toggleItemAdd(top5list)" href="javascript:;" class="btn btn-primary btn-sm">Add Item</a>
+                                        </p>
+                                        <form name="addtop5listitem" data-ng-show="top5list.addItemMode">
+                                            <div class="form-group">
+                                                <label for="iname" class="col-sm-2 control-label">Item:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="cname" placeholder="Enter Item" data-ng-model="newtop5listitem.Text" required />
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <input type="submit" value="Add" data-ng-click="addItem(top5list)" class="btn btn-primary btn-sm" />
+                                                    <input type="button" value="Cancel" data-ng-click="toggleItemAdd(top5list)" class="btn btn-primary btn-sm" />
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                        </h4>
-                        </div>
-                        <div id="collapse{{ top5list.top5ListId }}" class="panel-collapse collapse">
-
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <p data-ng-hide="top5list.addItemMode">
-                                        <a data-ng-click="toggleItemAdd(top5list)" href="javascript:;" class="btn btn-primary">Add New List Item</a>
-                                    </p>
-                                    <form name="addtop5listitem" data-ng-show="top5list.addItemMode">
-                                        <div class="form-group">
-                                            <label for="cname" class="col-sm-2 control-label">Item text:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="cname" placeholder="please enter item text" data-ng-model="newtop5listitem.Text" required />
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <div class="form-group">
-                                            <div class="col-sm-offset-2 col-sm-10">
-                                                <input type="submit" value="Add" data-ng-click="addItem(top5list)" class="btn btn-primary" />
-                                                <input type="button" value="Cancel" data-ng-click="toggleItemAdd(top5list)" class="btn btn-primary" />
-                                            </div>
-                                        </div>
-                                        <br />
-                                        <br />
-                                    </form>
-                                    <ul class="list-group">
-                                        <li class="list-group-item" data-ng-repeat="top5listitem in top5list.top5listitems">
-                                            <div class="row">
-                                                <div class="col-sm-6">
-                                                    {{ top5listitem.text }}
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <ul class="list-group">
+                                            <li class="list-group-item" data-ng-repeat="top5listitem in top5list.top5listitems">
+                                                <div class="row">
+                                                    <table style="width: 100%">
+                                                        <tr>
+                                                            <td align="left">
+                                                                <div class="col-sm-12">
+                                                                    {{ top5listitem.text }}
+                                                                </div>
+                                                            </td>
+                                                            <td align="right">
+                                                                <div class="col-sm-12" style="text-align: right;">
+                                                                    <a data-ng-click="deletetop5listitem(top5listitem)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
-                                                <div class="col-sm-6" style="text-align: right;">
-                                                    <a data-ng-click="deletetop5listitem(top5listitem)" href="javascript:;"><span class="glyphicon glyphicon-remove"></span></a>
-                                                 </div>
-                                        </div>
-                                        </li>
-                                    </ul>
-
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="panel-footer">
-                                <tags-input placeholder="tags" 
-                                            ng-model="tags" 
-                                            display-property="tagText" 
-                                            key-property="tagId" 
+                                <tags-input placeholder="tags"
+                                            ng-model="tags"
+                                            display-property="tagText"
+                                            key-property="tagId"
                                             maxTags="4"
-                                            on-tag-added="tagAdded($tag)" 
+                                            on-tag-added="tagAdded($tag)"
                                             on-tag-removed="tagRemoved($tag)">
                                 </tags-input>
                             </div>
+                        </div>
                     </div>
                 </div>
-    <div id="mydiv" data-ng-show="loading">
-        <span class="glyphicon glyphicon-refresh">Loading...</span>
-    </div>
-</div>
-                </div>
+            </div>
+            <div id="mydiv" data-ng-show="loading">
+                <span class="glyphicon glyphicon-refresh">Loading...</span>
             </div>
         </div>
+   </div>
+</div>
