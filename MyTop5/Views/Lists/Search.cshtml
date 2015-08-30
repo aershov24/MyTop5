@@ -1,0 +1,68 @@
+﻿
+<div data-ng-controller="searchController" class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <br />
+                <tags-input placeholder="Search"
+                            ng-model="searchtags"
+                            on-tag-added="tagAdded($tag)"
+                            on-tag-removed="tagRemoved($tag)">
+                </tags-input>
+            <br/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-group" id="mytop5lists">
+                <div class="panel panel-default" data-ng-repeat=" top5list in top5lists">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <a data-toggle="collapse" data-parent="#mytop5lists" data-ng-hide="top5list.editMode" data-ng-click="showItems(top5list)" href="#collapse{{ top5list.top5ListId }}">{{ top5list.title }}</a>
+                                    <input data-ng-show="top5list.editMode" type="text" data-ng-model="top5list.Title" />
+                                </div>
+                                <div class="col-sm-6" style="text-align: right;">
+                                    <a data-ng-hide="top5list.editMode" data-ng-click="bookmarkList(top5list)" href="javascript:;"><span class="glyphicon glyphicon-bookmark"></span></a> 
+                                </div>
+                            </div>
+                        </h4>
+                    </div>
+                    <div id="collapse{{ top5list.top5ListId }}" class="panel-collapse collapse">
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item" data-ng-repeat="top5listitem in top5list.top5listitems">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                {{ top5listitem.text }}
+                                            </div>
+                                            <div class="col-sm-6" style="text-align: right;">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <tags-input placeholder="tags"
+                                        ng-model="tags"
+                                        display-property="tagText"
+                                        key-property="tagId"
+                                        maxTags="4"
+                                        on-tag-added="tagAdded($tag)"
+                                        on-tag-removed="tagRemoved($tag)"
+                                        ng-disabled="true">
+                            </tags-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="mydiv" data-ng-show="loading">
+                <span class="glyphicon glyphicon-refresh">Loading...</span>
+            </div>
+        </div>
+    </div>
+</div>
